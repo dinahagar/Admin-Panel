@@ -14,7 +14,15 @@ export const productsApi = createApi({
               }
             }
         }),
+        addProduct: build.mutation({
+            query(body) {
+                return {
+                    url: `/products`,
+                    method: 'POST',
+                }
+            }
+        })
     }),
 })
 
-export const { useGetAllProductsQuery } = productsApi
+export const { useGetAllProductsQuery, useAddProductMutation } = productsApi
