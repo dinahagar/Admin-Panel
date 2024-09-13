@@ -1,10 +1,16 @@
 import { useUserLoginMutation } from "../../Store/services/login";
-import { StyledContent, StyledContentDiv } from "../Home/Home.styles"
+import { StyledContent } from "../Home/Home.styles"
 import { Button, Form, Input } from "antd"
 import { useNavigate } from "react-router-dom";
+import { StyledLoginDiv } from "./Login.styles";
+import { ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../Store/reducers/loginSlice";
 
 const Login = () => {
 
+    const { username, password } = useSelector((state: any) => state.login)
+    const dispatch = useDispatch()
     const [login] = useUserLoginMutation()
     const navigate = useNavigate();
 
@@ -12,11 +18,19 @@ const Login = () => {
         username?: string;
         password?: string;
     };
-      
+  
+    const handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(setUser({ username: e.target.value}))
+    }
+
+    const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(setUser({ password: e.target.value}))
+    }
+
     const onSubmit = () => {
         login({    
-            username: 'johnd',
-            password: 'm38rmF$'
+            username: username,
+            password: password
         }).unwrap()
         .then((res) => {
             console.log(res);
@@ -28,7 +42,7 @@ const Login = () => {
 
     return (
         <StyledContent>
-            <StyledContentDiv>
+            <StyledLoginDiv>
                 <Form
                     name="basic"
                     labelCol={{ span: 8 }}
@@ -43,7 +57,7 @@ const Login = () => {
                         name="username"
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
-                        <Input size="large" placeholder="Username" />
+                        <Input size="large" placeholder="Username" onChange={(e) => handleChangeUsername(e)} />
                     </Form.Item>
 
                     <Form.Item<FieldType>
@@ -51,7 +65,7 @@ const Login = () => {
                         name="password"
                         rules={[{ required: true, message: 'Please input your password!' }]}
                     >
-                        <Input.Password size="large" placeholder="Password" />
+                        <Input.Password size="large" placeholder="Password" onChange={(e) => handleChangePassword(e)} />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -60,7 +74,7 @@ const Login = () => {
                         </Button>
                     </Form.Item>
                 </Form>
-            </StyledContentDiv>
+            </StyledLoginDiv>
         </StyledContent>
     )
 }

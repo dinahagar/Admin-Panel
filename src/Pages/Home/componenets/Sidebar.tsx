@@ -1,12 +1,13 @@
 import { DesktopOutlined, PieChartOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd"
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
     const { Sider } = Layout;
     const [collapsed, setCollapsed] = useState(false);
-    
+    const location = useLocation();
+
     const items = [
         {
             key: '/',
@@ -31,12 +32,22 @@ const Sidebar: React.FC = () => {
             ]
         },
     ]
-
+    
     return (
-        <Sider collapsible breakpoint="sm" collapsedWidth="80px" collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-            <div className="demo-logo-vertical" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
-        </Sider>
+        <>
+            {location.pathname !== "/login" && (
+            <Sider
+                collapsible
+                breakpoint="sm"
+                collapsedWidth="80px"
+                collapsed={collapsed}
+                onCollapse={(value) => setCollapsed(value)}
+            >
+                <div className="demo-logo-vertical" />
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+            </Sider>
+            )}
+        </>
     )
 }
 

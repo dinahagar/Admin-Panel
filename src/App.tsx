@@ -11,6 +11,7 @@ export interface AppProps {
   setLocale: (locale: 'en' | 'ar') => void;
 }
 
+
 const App: React.FC<AppProps> = () => {
 
   return (

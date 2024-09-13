@@ -1,9 +1,10 @@
 import { Button, Dropdown, MenuProps } from "antd"
 import { UserOutlined } from "@ant-design/icons";
 import { StyledHeader } from "../Home.styles";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header: React.FC = () => {  
+  const location = useLocation();
 
     const items: MenuProps['items'] = [
         {
@@ -15,11 +16,15 @@ const Header: React.FC = () => {
       ];
 
     return (
-        <StyledHeader>
-            <Dropdown menu={{ items }} placement="bottom">
-                <Button><UserOutlined /></Button>
-            </Dropdown>
-        </StyledHeader>
+      <>
+        {location.pathname !== "/login" && (
+          <StyledHeader>
+              <Dropdown menu={{ items }} placement="bottom">
+                  <Button><UserOutlined /></Button>
+              </Dropdown>
+          </StyledHeader>
+        )}
+      </>
     )
 }
 

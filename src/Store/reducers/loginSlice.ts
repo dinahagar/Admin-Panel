@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface LoginState {
-    usename: string;
+    username: string;
     password: string; 
     token: string;
 }
 
 const initialState: LoginState = {
-    usename: '',
+    username: '',
     password: '',
     token: localStorage.getItem('token') ?? ''
   };
