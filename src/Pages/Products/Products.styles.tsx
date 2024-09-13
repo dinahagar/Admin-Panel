@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row } from "antd";
+import { Button, Card, Col, Modal, Row } from "antd";
 import styled from "styled-components";
 
 export const StyledProductsDiv = styled.div`
@@ -55,4 +55,21 @@ export const StyledCard = styled(Card)`
     .ant-card-actions {
         height: 48px;
     }
+`
+
+export const StyledModal = styled(Modal)`
+    margin-top: -45px !important;
+`
+
+export const StyledImageDiv = styled.div`
+    display: flex;
+    justify-content: center;
+`
+export const StyledDetailesDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+    color: brown;
+`
+export const StyledPDiv = styled.p`
+    font-weight: bold;
 `
