@@ -1,5 +1,5 @@
-import { Button, Card } from "antd";
-import { useAddProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
+import { Card } from "antd";
+import { useAddProductMutation, useDeleteProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
 import { StyledContent } from "../Home/Home.styles"
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { StyledButton, StyledCard, StyledCol, StyledDiv, StyledProductsDiv, StyledRow } from "./Products.styles";
@@ -11,9 +11,11 @@ const Products = () => {
 
     const {data} = useGetAllProductsQuery({})
     const [addProduct] = useAddProductMutation()
-    const [add, setAdd] = useState(false)   
+    const [deleteProduct] = useDeleteProductMutation()
+    const [action, setAction] = useState(false)   
     const [productsArray, setProductsArray] = useState(data)
 
+    const products = action ? productsArray : data 
     const newProduct = {
         id:21,
         title: 'test product',
@@ -25,11 +27,21 @@ const Products = () => {
  
     const handleAddNewProduct = () => {
         addProduct(newProduct).unwrap()
-        .then(() => {
-            setAdd(true)
-            setProductsArray([newProduct, ...data])
+        .then((res) => {
+            setAction(true)
+            setProductsArray([res, ...data])
         })
-        .catch((error) => console.log(error))
+        .catch(() => {})
+    }
+
+    const handleDeleteProduct = (id: number) => {
+        deleteProduct({id}).unwrap()
+        .then((res) => {
+            setAction(true)
+            const notDeleted = products?.filter((product: { id: any; }) => product.id !== res.id)
+            setProductsArray(notDeleted)
+        })
+        .catch(() => {})
     }
 
     return (
@@ -41,7 +53,7 @@ const Products = () => {
                     <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
                 </StyledDiv>
                 <StyledRow>
-                    {(add ? productsArray : data )?.map((product: any) => (
+                    {products?.map((product: any) => (
                         <StyledCol xs={24} sm={24} md={12} lg={8} xl={6} key={product.id}>
                             <StyledCard
                                 style={{ width: 200 }}
@@ -53,7 +65,7 @@ const Products = () => {
                                 />
                                 }
                                 actions={[
-                                <DeleteOutlined key="delete" />,
+                                <DeleteOutlined key="delete" onClick={() => handleDeleteProduct(product.id)}/>,
                                 <EditOutlined key="edit" />,
                                 <EyeOutlined key="view" />,
                                 ]}

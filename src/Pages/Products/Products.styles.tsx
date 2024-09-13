@@ -25,25 +25,34 @@ export const StyledDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 430px) {
+        display: block;
+    }
 `
 
 export const StyledButton = styled(Button)`
     border: none;
     background: #002140;
     color: #fff;
+
+    @media (max-width: 430px) {
+        margin-bottom: 5px;
+    }
 `
 
 export const StyledCard = styled(Card)`
+    height: 292px;
     .ant-card-cover {
         display: flex;
         justify-content: center;
         margin: 10px;
-        min-height: 120px;
+        height: 120px;
     }
     .ant-card-body {
-        min-height: 95px;
+        height: 95px;
     }
     .ant-card-actions {
-        min-height: 48px;
+        height: 48px;
     }
 `
