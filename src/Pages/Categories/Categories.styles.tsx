@@ -17,9 +17,13 @@ export const StyledRow = styled(Row)`
     gap: 45px;
 `
 
-export const StyledCard = styled(Card)`
+export const StyledCategoriesCard = styled(Card)`
     width: 300px;
-    display: flex;
     justify-content: center;
     cursor: pointer;
+
+    .ant-card-body {
+        display: flex;
+        justify-content: center;
+    }
 `

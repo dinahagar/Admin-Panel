@@ -1,8 +1,9 @@
 import { Skeleton } from "antd"
 import { useGetAllCategoriesQuery } from "../../Store/services/categories"
 import { StyledContent } from "../Home/Home.styles"
-import { StyledCard, StyledProductsDiv, StyledRow } from "./Categories.styles"
+import { StyledCategoriesCard, StyledProductsDiv, StyledRow } from "./Categories.styles"
 import { useNavigate } from "react-router-dom"
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons"
 
 const Categories = () => {
     const {data, isLoading} = useGetAllCategoriesQuery({})
@@ -26,13 +27,16 @@ const Categories = () => {
                     <StyledRow>
                         {data?.map((category: any, index: number) => (
                             <>
-                                <StyledCard 
-                                    style={{ backgroundColor: colors[index % colors.length] }} 
-                                    key={category.id}
-                                    onClick={() => navigate(`/category/${category}`)}
+                                <StyledCategoriesCard
+                                    style={{ backgroundColor: colors[index % colors.length] }}
+                                    actions={[
+                                        <DeleteOutlined key="delete" onClick={() => {}}/>,
+                                        <EditOutlined key="edit" onClick={() => {}}/>,
+                                        <EyeOutlined key="view"  onClick={() => navigate(`/category/${category}`)} />
+                                    ]}
                                 >
                                     <h1>{category}</h1>
-                                </StyledCard>
+                                </StyledCategoriesCard>
                             </>
                         ))}
                     </StyledRow>
