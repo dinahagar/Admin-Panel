@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
 import languageSlice from './reducers/languageSlice'
-import { loginApiApi } from './services/login'
+import { loginApi } from './services/login'
 import loginSlice from './reducers/loginSlice'
+import { productsApi } from './services/products'
 
 export const store = configureStore({
   reducer: {
     language: languageSlice,
     login: loginSlice,
-    [loginApiApi.reducerPath]: loginApiApi.reducer
+    [loginApi.reducerPath]: loginApi.reducer,
+    [productsApi.reducerPath]: productsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(loginApiApi.middleware),
+    getDefaultMiddleware().concat(loginApi.middleware, productsApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -33,7 +33,6 @@ const Login = () => {
             password: password
         }).unwrap()
         .then((res) => {
-            console.log(res);
             localStorage.setItem('token', res.token)
             navigate('/')
         })
