@@ -1,8 +1,8 @@
-import { Card } from "antd";
+import { Button, Card } from "antd";
 import { useAddProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
 import { StyledContent } from "../Home/Home.styles"
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { StyledCard, StyledCol, StyledProductsDiv, StyledRow } from "./Products.styles";
+import { StyledButton, StyledCard, StyledCol, StyledDiv, StyledProductsDiv, StyledRow } from "./Products.styles";
 import { useState } from "react";
 
 const { Meta } = Card;
@@ -36,10 +36,10 @@ const Products = () => {
         <>
             <StyledContent>
             <StyledProductsDiv>
-                <div>
+                <StyledDiv>
                     <h1>Products</h1>
-                    <button onClick={handleAddNewProduct}>Add Product</button>
-                </div>
+                    <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
+                </StyledDiv>
                 <StyledRow>
                     {(add ? productsArray : data )?.map((product: any) => (
                         <StyledCol xs={24} sm={24} md={12} lg={8} xl={6} key={product.id}>
