@@ -3,6 +3,7 @@ import { StyledCard, StyledCol } from "../Products.styles"
 import { useDeleteProductMutation, useUpdateProductMutation } from "../../../Store/services/products"
 import { Product } from "../Products"
 import { Card, Row } from "antd";
+import { toast } from "react-toastify";
 
 const { Meta } = Card;
 
@@ -34,8 +35,9 @@ const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction
             setAction(true)
             const notDeleted = products?.filter((product: Product) => product.id !== res.id)
             setProductsArray(notDeleted)
+            toast.success('Product deleted successfully');
         })
-        .catch(() => {})
+        .catch((error) => toast.error(error))
     }
 
     const handleUpdateProduct = (product: any) => {        
@@ -44,8 +46,9 @@ const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction
             setAction(true)
             const notDeleted = products?.filter((product: { id: any; }) => product.id !== res.id)
             setProductsArray([updatedProduct, ...notDeleted])
+            toast.success('Product updated successfully');
         })
-        .catch(() => {})
+        .catch((error) => toast.error(error))
     }
 
     return (

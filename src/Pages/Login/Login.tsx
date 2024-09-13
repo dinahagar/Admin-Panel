@@ -6,6 +6,7 @@ import { StyledLoginDiv } from "./Login.styles";
 import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../Store/reducers/loginSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
 
@@ -35,8 +36,9 @@ const Login = () => {
         .then((res) => {
             localStorage.setItem('token', res.token)
             navigate('/')
+            toast.success('Welcome');
         })
-        .catch(() => {})
+        .catch((error) => toast.error(error))
     };
 
     return (

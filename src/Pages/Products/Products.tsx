@@ -4,6 +4,7 @@ import { StyledButton, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal
 import { useState } from "react";
 import ProductCard from "./components/ProductCard";
 import { Skeleton } from "antd";
+import { toast } from "react-toastify";
 
 export interface Product {
     id: number,
@@ -45,8 +46,9 @@ const Products = () => {
         .then((res) => {
             setAction(true)
             setProductsArray([res, ...data])
+            toast.success('Product added successfully');
         })
-        .catch(() => {})
+        .catch((error) => toast.error(error))
     }
 
     const handleCancelModal = () => {

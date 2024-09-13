@@ -6,6 +6,7 @@ import { useGetCategoryProductsQuery } from "../../Store/services/categories";
 import ProductCard from "../Products/components/ProductCard";
 import { StyledButton, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "../Products/Products.styles";
 import { Skeleton } from "antd";
+import { toast } from "react-toastify";
 
 export interface Product {
     id: number,
@@ -48,8 +49,9 @@ const CategoryProducts = () => {
         .then((res) => {
             setAction(true)
             setProductsArray([res, ...data])
+            toast.success('Product added successfully');
         })
-        .catch(() => {})
+        .catch((error) => toast.error(error))
     }
 
     const handleCancelModal = () => {
