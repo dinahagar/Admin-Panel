@@ -16,15 +16,15 @@ export const StyledFooter = styled(Footer)`
 `
 
 export const StyledLayout = styled(Layout)`
-   min-height: 100vh;
+   min-height: 90vh;
 `
 
 export const StyledContent = styled(Content)`
     margin: 0 16px;
 `
 
-export const StyledContentiv = styled.div`
-    padding: 24;
+export const StyledContentDiv = styled.div`
+    padding: 24px;
     min-height: 360px;
     background: #fff;
     border-radius: 8px;

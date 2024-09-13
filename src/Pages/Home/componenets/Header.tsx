@@ -1,15 +1,15 @@
 import { Button, Dropdown, MenuProps } from "antd"
 import { UserOutlined } from "@ant-design/icons";
 import { StyledHeader } from "../Home.styles";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {  
+
     const items: MenuProps['items'] = [
         {
           key: '1',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-              Logout
-            </a>
+            <Link to='/login'>Logout</Link>
           ),
         }
       ];
