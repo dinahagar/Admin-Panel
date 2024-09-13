@@ -1,5 +1,5 @@
 import { Card } from "antd";
-import { useAddProductMutation, useDeleteProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
+import { useAddProductMutation, useDeleteProductMutation, useGetAllProductsQuery, useUpdateProductMutation } from "../../Store/services/products"
 import { StyledContent } from "../Home/Home.styles"
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { StyledButton, StyledCard, StyledCol, StyledDiv, StyledProductsDiv, StyledRow } from "./Products.styles";
@@ -12,6 +12,7 @@ const Products = () => {
     const {data} = useGetAllProductsQuery({})
     const [addProduct] = useAddProductMutation()
     const [deleteProduct] = useDeleteProductMutation()
+    const [updateProduct] = useUpdateProductMutation()
     const [action, setAction] = useState(false)   
     const [productsArray, setProductsArray] = useState(data)
 
@@ -23,6 +24,14 @@ const Products = () => {
         description: 'lorem ipsum set',
         image: 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg',
         category: 'electronic'
+    }
+    const updatedProduct = {
+        id: 22,
+        title:'new title',
+        price:'new price',
+        category:'new category',
+        description:'new description',
+        image:'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg'
     }
  
     const handleAddNewProduct = () => {
@@ -40,6 +49,18 @@ const Products = () => {
             setAction(true)
             const notDeleted = products?.filter((product: { id: any; }) => product.id !== res.id)
             setProductsArray(notDeleted)
+        })
+        .catch(() => {})
+    }
+
+    const handleUpdateProduct = (product: any) => {
+        console.log(product);
+        
+        updateProduct(product).unwrap()
+        .then((res) => {
+            setAction(true)
+            const notDeleted = products?.filter((product: { id: any; }) => product.id !== res.id)
+            setProductsArray([updatedProduct, ...notDeleted])
         })
         .catch(() => {})
     }
@@ -66,7 +87,7 @@ const Products = () => {
                                 }
                                 actions={[
                                 <DeleteOutlined key="delete" onClick={() => handleDeleteProduct(product.id)}/>,
-                                <EditOutlined key="edit" />,
+                                <EditOutlined key="edit" onClick={() => handleUpdateProduct(product)}/>,
                                 <EyeOutlined key="view" />,
                                 ]}
                             >
