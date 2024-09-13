@@ -1,4 +1,4 @@
-import { Button, Card, Col, Modal, Row } from "antd";
+import { Button, Card, Col, Modal } from "antd";
 import styled from "styled-components";
 
 export const StyledProductsDiv = styled.div`
@@ -11,8 +11,6 @@ export const StyledProductsDiv = styled.div`
     justify-content: center;
     align-items: center;
     display: grid;
-`
-export const StyledRow = styled(Row)`
 `
 
 export const StyledCol = styled(Col)`

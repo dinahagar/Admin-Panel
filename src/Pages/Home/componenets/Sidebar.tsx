@@ -2,6 +2,7 @@ import { DesktopOutlined, PieChartOutlined, UserOutlined } from "@ant-design/ico
 import { Layout, Menu } from "antd"
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { StyledLink } from "../Home.styles";
 
 const Sidebar: React.FC = () => {
     const { Sider } = Layout;
@@ -21,14 +22,29 @@ const Sidebar: React.FC = () => {
         },
         {
             key: '/categories',
-            label: 'Categories',
+            label: <StyledLink to='/categories'>Categories</StyledLink>,
             icon: <PieChartOutlined />,
             children: [
                 {
                   key: 'g1',
-                  label: 'Item 1',
+                  label: <StyledLink to='/category/electronics'>Electronics</StyledLink>,
                   type: 'group',
                 },
+                {
+                  key: 'g2',
+                  label: <StyledLink to='/category/jewelery'>Jewelery</StyledLink>,
+                  type: 'group',
+                },
+                {
+                  key: 'g3',
+                  label: <StyledLink to="/category/men's%20clothing">Men's clothing</StyledLink>,
+                  type: 'group',
+                },
+                {
+                  key: 'g4',
+                  label: <StyledLink to="/category/women's clothing">Women's clothing</StyledLink>,
+                  type: 'group',
+                }
             ]
         },
     ]

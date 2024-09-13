@@ -1,4 +1,5 @@
 import { Layout } from "antd";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const { Header, Content, Footer } = Layout;
@@ -21,6 +22,10 @@ export const StyledLayout = styled(Layout)`
 
 export const StyledContent = styled(Content)`
     margin: 0 16px;
+`
+
+export const StyledLink = styled(Link)`
+    color: rgba(255, 255, 255, 0.65);
 `
 
 export const StyledContentDiv = styled.div`

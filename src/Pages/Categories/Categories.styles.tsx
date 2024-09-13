@@ -1,0 +1,25 @@
+import { Card, Row } from "antd";
+import styled from "styled-components";
+
+export const StyledProductsDiv = styled.div`
+    padding: 24px;
+    min-height: 360px;
+    background: #fff;
+    border-radius: 8px;
+    height: 84vh;
+    margin-top: 20px;
+    display: block;
+`
+
+export const StyledRow = styled(Row)`
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+`
+
+export const StyledCard = styled(Card)`
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+`

@@ -1,8 +1,10 @@
-import { useAddProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
+import { useAddProductMutation } from "../../Store/services/products"
 import { StyledContent } from "../Home/Home.styles"
-import { StyledButton, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "./Products.styles";
 import { useState } from "react";
-import ProductCard from "./components/ProductCard";
+import { useParams } from "react-router-dom";
+import { useGetCategoryProductsQuery } from "../../Store/services/categories";
+import ProductCard from "../Products/components/ProductCard";
+import { StyledButton, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "../Products/Products.styles";
 import { Skeleton } from "antd";
 
 export interface Product {
@@ -23,9 +25,10 @@ let productInitial = {
     category: ''
 }
 
-const Products = () => {
-
-    const {data, isLoading} = useGetAllProductsQuery({})
+const CategoryProducts = () => {
+    
+    const { category } = useParams();
+    const {data, isLoading} = useGetCategoryProductsQuery({category})
     const [addProduct] = useAddProductMutation()
     const [action, setAction] = useState(false)   
     const [productsArray, setProductsArray] = useState(data)
@@ -63,7 +66,7 @@ const Products = () => {
                         <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
                     </StyledDiv>
 
-                    <ProductCard 
+                    <ProductCard
                         data={data} 
                         productsArray={productsArray} 
                         setAction={setAction} 
@@ -71,10 +74,10 @@ const Products = () => {
                         setProductsArray={setProductsArray} 
                         setIsOpen={setIsOpen} 
                     />
+                    
                 </StyledProductsDiv>
                 </StyledContent>
             }
-            
             <StyledModal title="" open={isOpen.isOpen} onCancel={handleCancelModal} footer={null}>
                 <StyledImageDiv>
                     <img src={isOpen.product.image} alt="" style={{ width: '55%', maxHeight: '45vh' }} />   
@@ -90,4 +93,4 @@ const Products = () => {
     )
 }
 
-export default Products
+export default CategoryProducts
