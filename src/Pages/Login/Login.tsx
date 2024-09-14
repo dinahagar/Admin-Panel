@@ -32,7 +32,7 @@ const Login: React.FC = () => {
         .then((res) => {
             localStorage.setItem('token', res.token)
             localStorage.setItem('username', username)
-            navigate('/')
+            navigate('/home')
             toast.success('Welcome');
         })
         .catch((error) => toast.error(error))

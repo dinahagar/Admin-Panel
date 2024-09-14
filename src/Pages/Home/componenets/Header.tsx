@@ -10,7 +10,7 @@ const Header: React.FC = () => {
         {
           key: '1',
           label: (
-            <Link to='/login' onClick={() => {
+            <Link to='/' onClick={() => {
               localStorage.removeItem('token')
               localStorage.removeItem('username')
             }}>Logout</Link>
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
 
     return (
       <>
-        {location.pathname !== "/login" && (
+        {location.pathname !== "/" && (
           <StyledHeader>
               <Dropdown menu={{ items }} placement="bottom">
                   <Button><UserOutlined /></Button>

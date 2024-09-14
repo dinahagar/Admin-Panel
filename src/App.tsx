@@ -22,8 +22,8 @@ const App: React.FC<AppProps> = () => {
           <Layout>
             <Header />
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/category/:category" element={<CategoryProducts />} />

@@ -11,8 +11,8 @@ const Sidebar: React.FC = () => {
 
     const items = [
         {
-            key: '/',
-            label: <Link to='/'>Home</Link>,
+            key: '/home',
+            label: <Link to='/home'>Home</Link>,
             icon: <UserOutlined />,
         },
         {
@@ -51,7 +51,7 @@ const Sidebar: React.FC = () => {
     
     return (
         <>
-            {location.pathname !== "/login" && (
+            {location.pathname !== "/" && (
             <Sider
                 collapsible
                 breakpoint="sm"
