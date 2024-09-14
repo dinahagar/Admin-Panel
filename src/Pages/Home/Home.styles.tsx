@@ -29,6 +29,10 @@ export const StyledLink = styled(Link)`
     color: rgba(255, 255, 255, 0.65);
 `
 
+export const StyledSpan = styled.span`
+    color: brown;
+`
+
 export const StyledContentDiv = styled.div`
     padding: 24px;
     min-height: 360px;

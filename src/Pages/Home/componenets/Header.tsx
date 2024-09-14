@@ -10,7 +10,10 @@ const Header: React.FC = () => {
         {
           key: '1',
           label: (
-            <Link to='/login' onClick={() => localStorage.removeItem('token')}>Logout</Link>
+            <Link to='/login' onClick={() => {
+              localStorage.removeItem('token')
+              localStorage.removeItem('username')
+            }}>Logout</Link>
           ),
         }
       ];
