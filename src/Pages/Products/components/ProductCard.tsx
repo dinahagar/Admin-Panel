@@ -17,7 +17,9 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction, action, setProductsArray, setIsOpen}) => {
+
     const products = action ? productsArray : data 
+    
     const updatedProduct: Product = {
         id: 22,
         title:'new title',
