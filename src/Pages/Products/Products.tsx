@@ -3,8 +3,9 @@ import { StyledContent } from "../Home/Home.styles"
 import { StyledButton, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "./Products.styles";
 import { useState } from "react";
 import ProductCard from "./components/ProductCard";
-import { Skeleton } from "antd";
+import { Pagination, Skeleton } from "antd";
 import { toast } from "react-toastify";
+import { useSearchParams } from "react-router-dom";
 
 export interface Product {
     id: number,
@@ -25,13 +26,20 @@ let productInitial = {
 }
 
 const Products = () => {
+    
+    const ITEMS_PER_PAGE = 10;
+    const [page, setPage] = useState(1)
 
-    const {data, isLoading} = useGetAllProductsQuery({})
+    const {data, isLoading} = useGetAllProductsQuery({ page, limit: 20})
     const [addProduct] = useAddProductMutation()
     const [action, setAction] = useState(false)   
     const [productsArray, setProductsArray] = useState(data)
     const [isOpen, setIsOpen] = useState({ product: productInitial, isOpen: false });
 
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const paginatedProducts = data?.slice(startIndex, endIndex);
+    
     const newProduct: Product = {
         id:21,
         title: 'test product',
@@ -55,26 +63,40 @@ const Products = () => {
         setIsOpen({ product: productInitial, isOpen: false })
     }
     
+    const handlePageChange = (page: number) => {
+        setPage(page)
+    }
+
     return (
         <>
             {isLoading ? <Skeleton /> : 
-                <StyledContent>
-                <StyledProductsDiv>
-                    <StyledDiv>
-                        <h1>Products</h1>
-                        <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
-                    </StyledDiv>
+                <>
+                    <StyledContent>
+                    <StyledProductsDiv>
+                        <StyledDiv>
+                            <h1>Products</h1>
+                            <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
+                        </StyledDiv>
 
-                    <ProductCard 
-                        data={data} 
-                        productsArray={productsArray} 
-                        setAction={setAction} 
-                        action={action} 
-                        setProductsArray={setProductsArray} 
-                        setIsOpen={setIsOpen} 
-                    />
-                </StyledProductsDiv>
-                </StyledContent>
+                        <ProductCard 
+                            data={paginatedProducts} 
+                            productsArray={productsArray} 
+                            setAction={setAction} 
+                            action={action} 
+                            setProductsArray={setProductsArray} 
+                            setIsOpen={setIsOpen} 
+                        />
+                    </StyledProductsDiv>
+                    </StyledContent>
+
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '11px' }}>
+                        <Pagination 
+                            defaultCurrent={1} 
+                            total={20} 
+                            onChange={handlePageChange}
+                        />
+                    </div>
+                </>
             }
             
             <StyledModal title="" open={isOpen.isOpen} onCancel={handleCancelModal} footer={null}>

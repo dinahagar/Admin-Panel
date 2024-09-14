@@ -6,8 +6,8 @@ export const StyledProductsDiv = styled.div`
     min-height: 360px;
     background: #fff;
     border-radius: 8px;
-    max-height: 85vh;
-    height: 85vh;
+    max-height: 80vh;
+    height: 80vh;
     margin-top: 20px;
     justify-content: center;
     align-items: center;
