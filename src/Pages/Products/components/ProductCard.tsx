@@ -8,18 +8,21 @@ import { toast } from "react-toastify";
 const { Meta } = Card;
 
 interface ProductCardProps {
-    data: any; 
+    data?: any; 
     setAction: any;
     setProductsArray: any; 
     setIsOpen: any;
     action: boolean;
     productsArray: any;
+    allData?: any
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction, action, setProductsArray, setIsOpen}) => {
+const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction, action, setProductsArray, setIsOpen, allData}) => {
 
     const products = action ? productsArray : data 
-    
+    const [deleteProduct] = useDeleteProductMutation()
+    const [updateProduct] = useUpdateProductMutation()
+
     const updatedProduct: Product = {
         id: 22,
         title:'new title',
@@ -28,8 +31,6 @@ const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction
         description:'new description',
         image:'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg'
     }
-    const [deleteProduct] = useDeleteProductMutation()
-    const [updateProduct] = useUpdateProductMutation()
 
     const handleDeleteProduct = (id: number) => {
         deleteProduct({id}).unwrap()
@@ -52,35 +53,52 @@ const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction
         })
         .catch((error) => toast.error(error))
     }
+    
+    const handleSearch = (input: string) => {
+        const searchTitleResult = allData?.filter((product: { title: string; }) => product.title.toLowerCase().startsWith(input.toLowerCase()))
+        setAction(true);
+        setProductsArray(searchTitleResult);
+        if(input.trim() !== '') {
+            setAction(true);
+            setProductsArray(searchTitleResult);
+        }else {
+            setProductsArray(products);
+            setAction(false);
+        }
+    }
 
     return (
-        <Row>
-        {products?.map((product: Product) => (
-            <StyledCol xs={24} sm={24} md={12} lg={8} xl={6} key={product.id}>
-                <StyledCard
-                    style={{ width: 200 }}
-                    cover={
-                    <img
-                        alt="example"
-                        src={product.image}
-                        style={{ width: '50%' }}
-                    />
-                    }
-                    actions={[
-                        <DeleteOutlined key="delete" onClick={() => handleDeleteProduct(product.id)}/>,
-                        <EditOutlined key="edit" onClick={() => handleUpdateProduct(product)}/>,
-                        <EyeOutlined key="view"  onClick={() => setIsOpen({ product: product, isOpen: true })} />
-                    ]}
-                >
-                    <Meta
-                        title={product.title}
-                        description={product.category}
-                    />
-                </StyledCard>
-            </StyledCol>
-        ))}
-    </Row>
+        <>
+            <input onChange={(e) => handleSearch(e.target.value)} style={{ position: 'fixed', top: '22px', left: '235px' }}/>
 
+            <Row>
+                {products?.map((product: Product) => (
+                    <StyledCol xs={24} sm={24} md={12} lg={8} xl={6} key={product.id}>
+                        <StyledCard
+                            style={{ width: 200 }}
+                            cover={
+                            <img
+                                alt="example"
+                                src={product.image}
+                                style={{ width: '50%' }}
+                            />
+                            }
+                            actions={[
+                                <DeleteOutlined key="delete" onClick={() => handleDeleteProduct(product.id)}/>,
+                                <EditOutlined key="edit" onClick={() => handleUpdateProduct(product)}/>,
+                                <EyeOutlined key="view"  onClick={() => setIsOpen({ product: product, isOpen: true })} />
+                            ]}
+                        >
+                            <Meta
+                                title={product.title}
+                                description={product.category}
+                            />
+                        </StyledCard>
+                    </StyledCol>
+                ))}
+            </Row>
+
+        </>
     )
 }
 

@@ -75,6 +75,7 @@ const CategoryProducts = () => {
                         action={action} 
                         setProductsArray={setProductsArray} 
                         setIsOpen={setIsOpen} 
+                        allData={data}
                     />
                     
                 </StyledProductsDiv>

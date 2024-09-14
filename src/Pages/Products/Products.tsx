@@ -25,6 +25,11 @@ let productInitial = {
     category: ''
 }
 
+export interface IsOpenState {
+    product: typeof productInitial;
+    isOpen: boolean;
+}
+
 const Products = () => {
     
     const ITEMS_PER_PAGE = 10;
@@ -32,9 +37,9 @@ const Products = () => {
 
     const {data, isLoading} = useGetAllProductsQuery({ page, limit: 20})
     const [addProduct] = useAddProductMutation()
-    const [action, setAction] = useState(false)   
+    const [action, setAction] = useState<boolean>(false)   
     const [productsArray, setProductsArray] = useState(data)
-    const [isOpen, setIsOpen] = useState({ product: productInitial, isOpen: false });
+    const [isOpen, setIsOpen] = useState<IsOpenState>({ product: productInitial, isOpen: false });
     const [filterPlaceholder, setFilterPlaceholder] = useState('Filter by category')
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -129,6 +134,7 @@ const Products = () => {
                             action={action} 
                             setProductsArray={setProductsArray} 
                             setIsOpen={setIsOpen} 
+                            allData={data}
                         />
                     </StyledProductsDiv>
                     </StyledContent>
