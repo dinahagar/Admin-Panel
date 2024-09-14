@@ -6,11 +6,13 @@ export const StyledProductsDiv = styled.div`
     min-height: 360px;
     background: #fff;
     border-radius: 8px;
-    height: 94vh;
+    max-height: 85vh;
+    height: 85vh;
     margin-top: 20px;
     justify-content: center;
     align-items: center;
     display: grid;
+    overflow-y: auto;
 `
 
 export const StyledCol = styled(Col)`

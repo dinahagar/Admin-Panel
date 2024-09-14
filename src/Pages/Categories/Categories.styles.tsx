@@ -6,9 +6,11 @@ export const StyledProductsDiv = styled.div`
     min-height: 360px;
     background: #fff;
     border-radius: 8px;
-    height: 84vh;
+    max-height: 85vh;
+    height: 85vh;
     margin-top: 20px;
     display: block;
+    overflow-y: auto;
 `
 
 export const StyledRow = styled(Row)`
