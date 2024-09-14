@@ -1,4 +1,4 @@
-import { Card, Row } from "antd";
+import { Button, Card, Row } from "antd";
 import styled from "styled-components";
 
 export const StyledProductsDiv = styled.div`
@@ -19,14 +19,27 @@ export const StyledRow = styled(Row)`
     gap: 45px;
 `
 
+export const StyledCategoryDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+
+export const StyledButton = styled(Button)`
+    background-color: #002140;
+    color: #fff;
+`
+
 export const StyledCategoriesCard = styled(Card)`
     width: 300px;
     justify-content: center;
     cursor: pointer;
+    min-height: 223px;
 
     .ant-card-body {
         display: flex;
         justify-content: center;
+        min-height: 173px;
     }
 
     @media (max-width: 1100px) {

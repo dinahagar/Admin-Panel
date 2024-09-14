@@ -6,7 +6,7 @@ export const categoriesApi = createApi({
         baseUrl: 'https://fakestoreapi.com',
     }),
     endpoints: (build) => ({
-        getAllCategories: build.query({
+        getAllCategories: build.query<string[], void>({
             query() {
               return {
                 url: `/products/categories`,
