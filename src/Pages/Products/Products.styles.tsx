@@ -1,4 +1,4 @@
-import { Button, Card, Col, Modal } from "antd";
+import { Button, Card, Col, Input, Modal } from "antd";
 import styled from "styled-components";
 
 export const StyledProductsDiv = styled.div`
@@ -65,15 +65,25 @@ export const StyledImageDiv = styled.div`
     display: flex;
     justify-content: center;
 `
+
 export const StyledDetailesDiv = styled.div`
     display: flex;
     justify-content: space-between;
     color: brown;
 `
+
 export const StyledPDiv = styled.p`
     font-weight: bold;
 `
+
 export const StyledButtonsDiv = styled.div`
     display: flex;
     gap: 10px;
+`
+
+export const StyledSearchInput = styled(Input)`
+    position: absolute;
+    top: -52px;
+    left: 15px;
+    width: 40%;
 `

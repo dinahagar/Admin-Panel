@@ -22,6 +22,7 @@ export const StyledLayout = styled(Layout)`
 
 export const StyledContent = styled(Content)`
     margin: 0 16px;
+    position: relative;
 `
 
 export const StyledLink = styled(Link)`

@@ -1,5 +1,5 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons"
-import { StyledCard, StyledCol } from "../Products.styles"
+import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons"
+import { StyledCard, StyledCol, StyledSearchInput } from "../Products.styles"
 import { useDeleteProductMutation, useUpdateProductMutation } from "../../../Store/services/products"
 import { Product } from "../Products"
 import { Card, Row } from "antd";
@@ -69,8 +69,12 @@ const ProductCard: React.FC<ProductCardProps> = ({data, productsArray, setAction
 
     return (
         <>
-            <input onChange={(e) => handleSearch(e.target.value)} style={{ position: 'fixed', top: '22px', left: '235px' }}/>
-
+            <StyledSearchInput 
+                size="large" 
+                placeholder="Search" 
+                prefix={<SearchOutlined />} 
+                onChange={(e) => handleSearch(e.target.value)}
+            />
             <Row>
                 {products?.map((product: Product) => (
                     <StyledCol xs={24} sm={24} md={12} lg={8} xl={6} key={product.id}>
