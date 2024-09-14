@@ -1,13 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface productsState {
-    items: any;
-    filteredItems: any;
-}
+import { Product, productsState } from "../../Types/products";
 
 const initialState: productsState = {
     items: [],
-    filteredItems: [],
 };
 
 const productsSlice = createSlice({
@@ -21,9 +16,9 @@ const productsSlice = createSlice({
             state.items.unshift(action.payload as never);
         },
         deleteProductItem: (state, action) => {
-            state.items = state.items.filter((item: { id: any; }) => item.id !== action.payload.id)
+            state.items = state.items.filter((item: { id: number }) => item.id !== action.payload.id)
         },
-        editProduct: (state, action: PayloadAction<{ index: number; updatedProduct: any }>) => {
+        editProduct: (state, action: PayloadAction<{ index: number; updatedProduct: Product }>) => {
             const { index, updatedProduct } = action.payload;            
             if (index >= 0 && index < state.items.length) {
                 state.items[index] = updatedProduct;

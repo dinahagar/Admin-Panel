@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { LoginState } from '../reducers/loginSlice';
+import { LoginState } from '../../Types/login';
 
 export const loginApi = createApi({
     reducerPath: 'loginApi',

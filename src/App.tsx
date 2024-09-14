@@ -10,32 +10,29 @@ import Categories from './Pages/Categories/Categories';
 import CategoryProducts from './Pages/CategoryProducts/CategoryProducts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-export interface AppProps {
-  setLocale: (locale: 'en' | 'ar') => void;
-}
+import { AppProps } from './Types/app';
 
 const App: React.FC<AppProps> = () => {
 
   return (
     <>
-<Router>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sidebar />
-        <Layout>
-          <Header />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/category/:category" element={<CategoryProducts />} />
-          </Routes>
-          <ToastContainer />
+      <Router>
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sidebar />
+          <Layout>
+            <Header />
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/category/:category" element={<CategoryProducts />} />
+            </Routes>
+            <ToastContainer />
+          </Layout>
         </Layout>
-      </Layout>
-    </Router>
-        </>
+      </Router>
+    </>
   );
 };
 

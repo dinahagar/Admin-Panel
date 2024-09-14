@@ -1,14 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface StringsState {
-    items: string[];
-  }
+import { categoriesState } from "../../Types/categories";
   
-  const initialState: StringsState = {
+const initialState: categoriesState = {
     items: []
-  };
+};
   
-  const categoriesSlice = createSlice({
+const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
@@ -28,7 +25,7 @@ interface StringsState {
             }
         }
     },
-  });
-  
-  export const { setApiItems, addCategory, deleteCategory, editCategory } = categoriesSlice.actions;
-  export default categoriesSlice.reducer;
+});
+
+export const { setApiItems, addCategory, deleteCategory, editCategory } = categoriesSlice.actions;
+export default categoriesSlice.reducer;

@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface LanguageState {
-    locale: string;
-    direction: 'ltr' | 'rtl';
-}
+import { LanguageState } from "../../Types/app";
 
 const initialState: LanguageState = {
     locale: 'en',

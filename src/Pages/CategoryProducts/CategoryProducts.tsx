@@ -9,15 +9,7 @@ import { Skeleton } from "antd";
 import { toast } from "react-toastify";
 import { addNewProduct } from "../../Store/reducers/productsSlice";
 import { useDispatch } from "react-redux";
-
-export interface Product {
-    id: number,
-    title: string,
-    price: number,
-    description: string,
-    image: string,
-    category: string
-}
+import { Product } from "../../Types/products";
 
 let productInitial = {
     id: 0,
@@ -28,13 +20,13 @@ let productInitial = {
     category: ''
 }
 
-const CategoryProducts = () => {
-    
+const CategoryProducts: React.FC = () => {
+
     const dispatch = useDispatch()
     const { category } = useParams();
     const {data, isLoading} = useGetCategoryProductsQuery({category})
     const [addProduct] = useAddProductMutation()
-    const [isOpen, setIsOpen] = useState({ product: productInitial, isOpen: false });
+    const [isOpen, setIsOpen] = useState<{product: Product, isOpen: boolean}>({ product: productInitial, isOpen: false });
 
     const newProduct: Product = {
         id:21,

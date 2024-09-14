@@ -1,20 +1,14 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons"
 import { StyledCard, StyledCol, StyledSearchInput } from "../Products.styles"
 import { useDeleteProductMutation, useUpdateProductMutation } from "../../../Store/services/products"
-import { Product } from "../Products"
 import { Card, Row } from "antd";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { deleteProductItem, editProduct } from "../../../Store/reducers/productsSlice";
 import { useEffect, useState } from "react";
+import { Product, ProductCardProps } from "../../../Types/products";
 
 const { Meta } = Card;
-
-interface ProductCardProps {
-    data?: any; 
-    setIsOpen: any;
-    allData?: any
-}
 
 const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen, allData}) => {
     const dispatch = useDispatch()
@@ -44,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen, allData}) => 
         .catch((error) => toast.error(error))
     }
 
-    const handleUpdateProduct = (index: number, product: any) => {        
+    const handleUpdateProduct = (index: number, product: Product) => {        
         updateProduct(product).unwrap()
         .then(() => {
             dispatch(editProduct({index, updatedProduct}))

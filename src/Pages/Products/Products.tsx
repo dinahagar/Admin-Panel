@@ -8,15 +8,7 @@ import { toast } from "react-toastify";
 import { DownOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewProduct, setApiItems } from "../../Store/reducers/productsSlice";
-
-export interface Product {
-    id: number,
-    title: string,
-    price: number,
-    description: string,
-    image: string,
-    category: string
-}
+import { IsOpenState, Product, productsState } from "../../Types/products";
 
 let productInitial = {
     id: 0,
@@ -27,12 +19,7 @@ let productInitial = {
     category: ''
 }
 
-export interface IsOpenState {
-    product: typeof productInitial;
-    isOpen: boolean;
-}
-
-const Products = () => {
+const Products: React.FC = () => {
     const dispatch = useDispatch()
     const ITEMS_PER_PAGE = 10;
     const [page, setPage] = useState(1)
@@ -45,7 +32,7 @@ const Products = () => {
         }
     }, [data, dispatch]);
 
-    const productsItems = useSelector((state: any) => state.products.items)
+    const productsItems = useSelector((state: { products: productsState }) => state.products.items)
 
     const [addProduct] = useAddProductMutation()
     const [isOpen, setIsOpen] = useState<IsOpenState>({ product: productInitial, isOpen: false });

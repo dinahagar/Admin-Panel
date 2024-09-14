@@ -7,18 +7,14 @@ import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../Store/reducers/loginSlice";
 import { toast } from "react-toastify";
+import { FieldType, LoginState } from "../../Types/login";
 
-const Login = () => {
+const Login: React.FC = () => {
 
-    const { username, password } = useSelector((state: any) => state.login)
+    const { username, password } = useSelector((state: { login: LoginState }) => state.login)
     const dispatch = useDispatch()
     const [login] = useUserLoginMutation()
     const navigate = useNavigate();
-
-    type FieldType = {
-        username?: string;
-        password?: string;
-    };
   
     const handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setUser({ username: e.target.value}))

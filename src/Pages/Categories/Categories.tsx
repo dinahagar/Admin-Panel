@@ -8,8 +8,9 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addCategory, deleteCategory, editCategory, setApiItems } from "../../Store/reducers/categoriesSlice"
 import { toast } from "react-toastify"
+import { categoriesState } from "../../Types/categories"
 
-const Categories = () => {
+const Categories: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const colors = [ '#FFDDC1', '#FFC3A0', '#D5AAFF', '#D4E157' ];
@@ -22,7 +23,7 @@ const Categories = () => {
     }, [data, dispatch]);
 
     
-    const categoryItems = useSelector((state: any) => state.categories.items)
+    const categoryItems = useSelector((state: { categories: categoriesState }) => state.categories.items)
     
     const handleAddCategory = () => {
         dispatch(addCategory('New Category'))
@@ -49,7 +50,7 @@ const Categories = () => {
                         <StyledButton onClick={handleAddCategory}>Add Category</StyledButton>
                     </StyledCategoryDiv>
                     <StyledRow>
-                        {categoryItems?.map((category: any, index: number) => (
+                        {categoryItems?.map((category: string, index: number) => (
                             <Col xs={24} sm={24} md={12} lg={8} xl={8} key={index}>
                                 <StyledCategoriesCard
                                     style={{ backgroundColor: colors[index % colors.length] }}
