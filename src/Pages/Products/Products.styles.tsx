@@ -73,3 +73,7 @@ export const StyledDetailesDiv = styled.div`
 export const StyledPDiv = styled.p`
     font-weight: bold;
 `
+export const StyledButtonsDiv = styled.div`
+    display: flex;
+    gap: 10px;
+`

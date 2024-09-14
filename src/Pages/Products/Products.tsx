@@ -1,11 +1,11 @@
 import { useAddProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
 import { StyledContent } from "../Home/Home.styles"
-import { StyledButton, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "./Products.styles";
+import { StyledButton, StyledButtonsDiv, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "./Products.styles";
 import { useState } from "react";
 import ProductCard from "./components/ProductCard";
-import { Pagination, Skeleton } from "antd";
+import { Button, Dropdown, MenuProps, Pagination, Skeleton, Space } from "antd";
 import { toast } from "react-toastify";
-import { useSearchParams } from "react-router-dom";
+import { DownOutlined } from "@ant-design/icons";
 
 export interface Product {
     id: number,
@@ -35,7 +35,7 @@ const Products = () => {
     const [action, setAction] = useState(false)   
     const [productsArray, setProductsArray] = useState(data)
     const [isOpen, setIsOpen] = useState({ product: productInitial, isOpen: false });
-
+    const [filterPlaceholder, setFilterPlaceholder] = useState('Filter by category')
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const paginatedProducts = data?.slice(startIndex, endIndex);
@@ -49,6 +49,33 @@ const Products = () => {
         category: 'electronic'
     }
  
+    const items: MenuProps['items'] = [
+        {
+          label: 'Electronics',
+          key: '1',
+          onClick: () => handleFilterProducts('electronics')
+        },
+        {
+          label: 'Jewelery',
+          key: '2',
+          onClick: () => handleFilterProducts('jewelery')
+        },
+        {
+          label: "Men's clothing",
+          key: '3',
+          onClick: () => handleFilterProducts("men's clothing")
+        },
+        {
+          label: "Women's clothing",
+          key: '4',
+          onClick: () => handleFilterProducts("women's clothing")
+        }
+    ];
+      
+    const menuProps = {
+        items
+    };
+
     const handleAddNewProduct = () => {
         addProduct(newProduct).unwrap()
         .then((res) => {
@@ -67,6 +94,13 @@ const Products = () => {
         setPage(page)
     }
 
+    const handleFilterProducts = (category: string) => {
+        setAction(true)
+        const categoryProducts = data.filter((product: { category: string; }) => product.category === category)
+        setFilterPlaceholder(category)
+        setProductsArray(categoryProducts)
+    }
+
     return (
         <>
             {isLoading ? <Skeleton /> : 
@@ -75,7 +109,17 @@ const Products = () => {
                     <StyledProductsDiv>
                         <StyledDiv>
                             <h1>Products</h1>
-                            <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
+                            <StyledButtonsDiv>
+                                <Dropdown menu={menuProps}>
+                                    <Button>
+                                        <Space>
+                                            {filterPlaceholder}
+                                            <DownOutlined />
+                                        </Space>
+                                    </Button>
+                                </Dropdown>
+                                <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
+                            </StyledButtonsDiv>
                         </StyledDiv>
 
                         <ProductCard 
