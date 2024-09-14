@@ -1,11 +1,13 @@
 import { useAddProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
 import { StyledContent } from "../Home/Home.styles"
 import { StyledButton, StyledButtonsDiv, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "./Products.styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import { Button, Dropdown, MenuProps, Pagination, Skeleton, Space } from "antd";
 import { toast } from "react-toastify";
 import { DownOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewProduct, setApiItems } from "../../Store/reducers/productsSlice";
 
 export interface Product {
     id: number,
@@ -31,22 +33,30 @@ export interface IsOpenState {
 }
 
 const Products = () => {
-    
+    const dispatch = useDispatch()
     const ITEMS_PER_PAGE = 10;
     const [page, setPage] = useState(1)
 
     const {data, isLoading} = useGetAllProductsQuery({ page, limit: 20})
+
+    useEffect(() => {
+        if (data) {
+          dispatch(setApiItems(data)); 
+        }
+    }, [data, dispatch]);
+
+    const productsItems = useSelector((state: any) => state.products.items)
+
     const [addProduct] = useAddProductMutation()
-    const [action, setAction] = useState<boolean>(false)   
-    const [productsArray, setProductsArray] = useState(data)
     const [isOpen, setIsOpen] = useState<IsOpenState>({ product: productInitial, isOpen: false });
     const [filterPlaceholder, setFilterPlaceholder] = useState('Filter by category')
+
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    const paginatedProducts = data?.slice(startIndex, endIndex);
+    const paginatedProducts = productsItems?.slice(startIndex, endIndex);
     
     const newProduct: Product = {
-        id:21,
+        id: 21,
         title: 'test product',
         price: 13.5,
         description: 'lorem ipsum set',
@@ -84,8 +94,7 @@ const Products = () => {
     const handleAddNewProduct = () => {
         addProduct(newProduct).unwrap()
         .then((res) => {
-            setAction(true)
-            setProductsArray([res, ...data])
+            dispatch(addNewProduct(res))
             toast.success('Product added successfully');
         })
         .catch((error) => toast.error(error))
@@ -100,12 +109,11 @@ const Products = () => {
     }
 
     const handleFilterProducts = (category: string) => {
-        setAction(true)
         const categoryProducts = data.filter((product: { category: string; }) => product.category === category)
+        dispatch(setApiItems(categoryProducts)); 
         setFilterPlaceholder(category)
-        setProductsArray(categoryProducts)
     }
-
+    
     return (
         <>
             {isLoading ? <Skeleton /> : 
@@ -129,12 +137,8 @@ const Products = () => {
 
                         <ProductCard 
                             data={paginatedProducts} 
-                            productsArray={productsArray} 
-                            setAction={setAction} 
-                            action={action} 
-                            setProductsArray={setProductsArray} 
                             setIsOpen={setIsOpen} 
-                            allData={data}
+                            allData={productsItems}
                         />
                     </StyledProductsDiv>
                     </StyledContent>

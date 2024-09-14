@@ -7,6 +7,8 @@ import ProductCard from "../Products/components/ProductCard";
 import { StyledButton, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "../Products/Products.styles";
 import { Skeleton } from "antd";
 import { toast } from "react-toastify";
+import { addNewProduct } from "../../Store/reducers/productsSlice";
+import { useDispatch } from "react-redux";
 
 export interface Product {
     id: number,
@@ -28,11 +30,10 @@ let productInitial = {
 
 const CategoryProducts = () => {
     
+    const dispatch = useDispatch()
     const { category } = useParams();
     const {data, isLoading} = useGetCategoryProductsQuery({category})
     const [addProduct] = useAddProductMutation()
-    const [action, setAction] = useState(false)   
-    const [productsArray, setProductsArray] = useState(data)
     const [isOpen, setIsOpen] = useState({ product: productInitial, isOpen: false });
 
     const newProduct: Product = {
@@ -47,8 +48,7 @@ const CategoryProducts = () => {
     const handleAddNewProduct = () => {
         addProduct(newProduct).unwrap()
         .then((res) => {
-            setAction(true)
-            setProductsArray([res, ...data])
+            dispatch(addNewProduct(res))
             toast.success('Product added successfully');
         })
         .catch((error) => toast.error(error))
@@ -70,10 +70,6 @@ const CategoryProducts = () => {
 
                     <ProductCard
                         data={data} 
-                        productsArray={productsArray} 
-                        setAction={setAction} 
-                        action={action} 
-                        setProductsArray={setProductsArray} 
                         setIsOpen={setIsOpen} 
                         allData={data}
                     />
