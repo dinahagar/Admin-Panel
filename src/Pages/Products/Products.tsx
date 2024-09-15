@@ -1,23 +1,15 @@
 import { useAddProductMutation, useGetAllProductsQuery } from "../../Store/services/products"
 import { StyledContent } from "../Home/Home.styles"
 import { StyledButton, StyledButtonsDiv, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "./Products.styles";
-import { useEffect, useState } from "react";
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import { Button, Dropdown, MenuProps, Pagination, Skeleton, Space } from "antd";
-import { toast } from "react-toastify";
 import { DownOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewProduct, setApiItems } from "../../Store/reducers/productsSlice";
-import { IsOpenState, Product, productsState } from "../../Types/products";
-
-let productInitial = {
-    id: 0,
-    title: '',
-    price: 0,
-    description: '',
-    image: '',
-    category: ''
-}
+import { IsOpenState, productsState } from "../../Types/products";
+import ProductModal from "./components/ProductModal";
+import { toast, ToastContentProps } from "react-toastify";
 
 const Products: React.FC = () => {
     const dispatch = useDispatch()
@@ -25,6 +17,7 @@ const Products: React.FC = () => {
     const [page, setPage] = useState(1)
 
     const {data, isLoading} = useGetAllProductsQuery({ page, limit: 20})
+    const [addProduct] = useAddProductMutation()
 
     useEffect(() => {
         if (data) {
@@ -34,22 +27,22 @@ const Products: React.FC = () => {
 
     const productsItems = useSelector((state: { products: productsState }) => state.products.items)
 
-    const [addProduct] = useAddProductMutation()
-    const [isOpen, setIsOpen] = useState<IsOpenState>({ product: productInitial, isOpen: false });
+    const [formData, setFormData] = useState({
+        id: '21',
+        title: '',
+        price: '',
+        description: '',
+        image: '',
+        category: ''
+    })
+
+    const [isOpen, setIsOpen] = useState<IsOpenState>({ product: formData, isOpen: false });
     const [filterPlaceholder, setFilterPlaceholder] = useState('Filter by category')
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const paginatedProducts = productsItems?.slice(startIndex, endIndex);
-    
-    const newProduct: Product = {
-        id: 21,
-        title: 'test product',
-        price: 13.5,
-        description: 'lorem ipsum set',
-        image: 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg',
-        category: 'electronic'
-    }
  
     const items: MenuProps['items'] = [
         {
@@ -77,18 +70,23 @@ const Products: React.FC = () => {
     const menuProps = {
         items
     };
-
+    
     const handleAddNewProduct = () => {
-        addProduct(newProduct).unwrap()
-        .then((res) => {
+        setIsModalOpen(true)
+    }
+    
+    const handleSubmit = () => {
+        addProduct(formData).unwrap()
+        .then((res: any) => {
             dispatch(addNewProduct(res))
             toast.success('Product added successfully');
         })
-        .catch((error) => toast.error(error))
+        .catch((error: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | ((props: ToastContentProps<unknown>) => ReactNode) | null | undefined) => toast.error(error))
+        setIsModalOpen(false)
     }
 
     const handleCancelModal = () => {
-        setIsOpen({ product: productInitial, isOpen: false })
+        setIsOpen({ product: formData, isOpen: false })
     }
     
     const handlePageChange = (page: number) => {
@@ -121,6 +119,14 @@ const Products: React.FC = () => {
                                 <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
                             </StyledButtonsDiv>
                         </StyledDiv>
+
+                        <ProductModal 
+                            isModalOpen={isModalOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            formData={formData}
+                            setFormData={setFormData}
+                            handleSubmit={handleSubmit}
+                        />
 
                         <ProductCard 
                             data={paginatedProducts} 

@@ -21,15 +21,15 @@ const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen, allData}) => 
     }, [allData, data])
 
     const updatedProduct: Product = {
-        id: 22,
+        id: '22',
         title:'new title',
-        price: 100,
+        price: '100',
         category:'new category',
         description:'new description',
         image:'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg'
     }
 
-    const handleDeleteProduct = (id: number) => {
+    const handleDeleteProduct = (id: string) => {
         deleteProduct({id}).unwrap()
         .then((res) => {            
             dispatch(deleteProductItem(res))

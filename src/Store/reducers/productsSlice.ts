@@ -16,7 +16,7 @@ const productsSlice = createSlice({
             state.items.unshift(action.payload as never);
         },
         deleteProductItem: (state, action) => {
-            state.items = state.items.filter((item: { id: number }) => item.id !== action.payload.id)
+            state.items = state.items.filter((item: { id: string }) => item.id !== action.payload.id)
         },
         editProduct: (state, action: PayloadAction<{ index: number; updatedProduct: Product }>) => {
             const { index, updatedProduct } = action.payload;            

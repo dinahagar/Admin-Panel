@@ -12,9 +12,9 @@ import { useDispatch } from "react-redux";
 import { Product } from "../../Types/products";
 
 let productInitial = {
-    id: 0,
+    id: '',
     title: '',
-    price: 0,
+    price: '',
     description: '',
     image: '',
     category: ''
@@ -29,9 +29,9 @@ const CategoryProducts: React.FC = () => {
     const [isOpen, setIsOpen] = useState<{product: Product, isOpen: boolean}>({ product: productInitial, isOpen: false });
 
     const newProduct: Product = {
-        id:21,
+        id: '21',
         title: 'test product',
-        price: 13.5,
+        price: '13.5',
         description: 'lorem ipsum set',
         image: 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg',
         category: 'electronic'
