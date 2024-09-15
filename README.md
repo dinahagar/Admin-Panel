@@ -1,7 +1,7 @@
 ## Project Name: Admin Panel
 
 ## Overview
-    Admin Panel is a web application designed to streamline the management of products and categories for online retail environments. It provides a user-friendly interface for administrators to efficiently handle product listings and categories, while offering end-users a seamless experience for browsing and searching products.
+    The Admin Panel is a web application designed to streamline the management of products and categories for online retail environments. It provides a user-friendly interface for administrators to efficiently handle product listings and categories, while offering end-users a seamless experience for browsing and searching products.
 
 ## Installation
 1. Clone the repository: https://github.com/dinahagar/Admin-Panel.git
@@ -36,7 +36,6 @@ After setting up and running the project locally, follow these steps to navigate
     * Add New Product: There is a button to add a new product to the list.
     * Filter Products: Use the dropdown to filter products by category.
     * Search Bar: Located in the header, allows you to search for products by title.
-    * Pagination: Navigate through multiple pages of products if the list is extensive.
 
 4. Categories Page
     * Displays all available categories.
@@ -73,3 +72,10 @@ Using Fake store api : https://fakestoreapi.com/
 
         GET /products/category/${category}
         Description: Retrieve all products within a specific category.
+
+## Future Enhancements
+
+1. Customizable Edit Forms: Implement forms that allow user to customize and update specific data fields more flexibly.
+2. Pagination: Add pagination functionality to improve navigation and performance when dealing with large sets of data.
+3. Enhanced Search Functionality: Improve the search capabilities to provide more accurate and relevant results for end-users.
+4. Localization Support: Integrate localization features to support multiple languages.
