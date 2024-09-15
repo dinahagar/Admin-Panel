@@ -47,7 +47,9 @@ After setting up and running the project locally, follow these steps to navigate
         * View Category Products: Click on a category to navigate to a page displaying all products within that category.
 
 ## API Documentation
+
 Using Fake store api : https://fakestoreapi.com/
+
     ## Authentication
         POST /auth/login
         Description: Authenticate a user and return a token for session management.
