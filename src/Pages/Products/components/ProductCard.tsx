@@ -3,22 +3,26 @@ import { StyledCard, StyledCol, StyledSearchInput } from "../Products.styles"
 import { useDeleteProductMutation, useUpdateProductMutation } from "../../../Store/services/products"
 import { Card, Row } from "antd";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { deleteProductItem, editProduct } from "../../../Store/reducers/productsSlice";
-import { useEffect, useState } from "react";
-import { Product, ProductCardProps } from "../../../Types/products";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProductItem, editProduct, setApiItems } from "../../../Store/reducers/productsSlice";
+import { useEffect } from "react";
+import { Product, ProductCardProps, productsState } from "../../../Types/products";
 
 const { Meta } = Card;
 
-const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen, allData}) => {
+const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen}) => {
     const dispatch = useDispatch()
     const [deleteProduct] = useDeleteProductMutation()
     const [updateProduct] = useUpdateProductMutation()
-    const [products, setProducts] = useState(data)
 
     useEffect(() => {
-        setProducts(data)
-    }, [allData, data])
+        if (data) {
+          dispatch(setApiItems(data)); 
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch]);
+
+    const productsItems = useSelector((state: { products: productsState }) => state.products.items)
 
     const updatedProduct: Product = {
         id: '22',
@@ -49,10 +53,10 @@ const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen, allData}) => 
     
     const handleSearch = (input: string) => {
         if(input.trim() !== '') {
-            const searchTitleResult = allData?.filter((product: { title: string; }) => product.title.toLowerCase().includes(input.toLowerCase()))
-            setProducts(searchTitleResult)
+            const searchTitleResult = data?.filter((product: { title: string; }) => product.title.toLowerCase().includes(input.toLowerCase()))
+            dispatch(setApiItems(searchTitleResult)); 
         }else {
-            setProducts(data)
+            dispatch(setApiItems(data)); 
         }
     }
     
@@ -65,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen, allData}) => 
                 onChange={(e) => handleSearch(e.target.value)}
             />
             <Row>
-                {products?.map((product: Product, index: number) => (
+                {productsItems?.map((product: Product, index: number) => (
                     <StyledCol xs={24} sm={24} md={12} lg={8} xl={6} key={product.id}>
                         <StyledCard
                             style={{ width: 200 }}

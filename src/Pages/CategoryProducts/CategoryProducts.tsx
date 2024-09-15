@@ -10,15 +10,7 @@ import { toast } from "react-toastify";
 import { addNewProduct } from "../../Store/reducers/productsSlice";
 import { useDispatch } from "react-redux";
 import { Product } from "../../Types/products";
-
-let productInitial = {
-    id: '',
-    title: '',
-    price: '',
-    description: '',
-    image: '',
-    category: ''
-}
+import ProductModal from "../Products/components/ProductModal";
 
 const CategoryProducts: React.FC = () => {
 
@@ -26,28 +18,35 @@ const CategoryProducts: React.FC = () => {
     const { category } = useParams();
     const {data, isLoading} = useGetCategoryProductsQuery({category})
     const [addProduct] = useAddProductMutation()
-    const [isOpen, setIsOpen] = useState<{product: Product, isOpen: boolean}>({ product: productInitial, isOpen: false });
 
-    const newProduct: Product = {
+    const [formData, setFormData] = useState({
         id: '21',
-        title: 'test product',
-        price: '13.5',
-        description: 'lorem ipsum set',
-        image: 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg',
-        category: 'electronic'
-    }
+        title: '',
+        price: '',
+        description: '',
+        image: '',
+        category: ''
+    })
+    const [isOpen, setIsOpen] = useState<{product: Product, isOpen: boolean}>({ product: formData, isOpen: false });
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
  
     const handleAddNewProduct = () => {
-        addProduct(newProduct).unwrap()
+        setIsModalOpen(true)
+    }
+    
+    const handleSubmit = () => {
+        addProduct(formData).unwrap()
         .then((res) => {
             dispatch(addNewProduct(res))
             toast.success('Product added successfully');
         })
         .catch((error) => toast.error(error))
+        setIsModalOpen(false)
     }
 
     const handleCancelModal = () => {
-        setIsOpen({ product: productInitial, isOpen: false })
+        setIsOpen({ product: formData, isOpen: false })
     }
     
     return (
@@ -59,6 +58,14 @@ const CategoryProducts: React.FC = () => {
                         <h1>Products</h1>
                         <StyledButton onClick={handleAddNewProduct}>Add Product</StyledButton>
                     </StyledDiv>
+
+                    <ProductModal 
+                        isModalOpen={isModalOpen}
+                        setIsModalOpen={setIsModalOpen}
+                        formData={formData}
+                        setFormData={setFormData}
+                        handleSubmit={handleSubmit}
+                    />
 
                     <ProductCard
                         data={data} 

@@ -3,7 +3,7 @@ import { StyledContent } from "../Home/Home.styles"
 import { StyledButton, StyledButtonsDiv, StyledDetailesDiv, StyledDiv, StyledImageDiv, StyledModal, StyledPDiv, StyledProductsDiv } from "./Products.styles";
 import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
-import { Button, Dropdown, MenuProps, Pagination, Skeleton, Space } from "antd";
+import { Button, Dropdown, MenuProps, Skeleton, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewProduct, setApiItems } from "../../Store/reducers/productsSlice";
@@ -13,10 +13,8 @@ import { toast, ToastContentProps } from "react-toastify";
 
 const Products: React.FC = () => {
     const dispatch = useDispatch()
-    const ITEMS_PER_PAGE = 10;
-    const [page, setPage] = useState(1)
 
-    const {data, isLoading} = useGetAllProductsQuery({ page, limit: 20})
+    const {data, isLoading} = useGetAllProductsQuery({ page: 1, limit: 20})
     const [addProduct] = useAddProductMutation()
 
     useEffect(() => {
@@ -40,10 +38,6 @@ const Products: React.FC = () => {
     const [filterPlaceholder, setFilterPlaceholder] = useState('Filter by category')
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const startIndex = (page - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const paginatedProducts = productsItems?.slice(startIndex, endIndex);
- 
     const items: MenuProps['items'] = [
         {
           label: 'Electronics',
@@ -89,10 +83,6 @@ const Products: React.FC = () => {
         setIsOpen({ product: formData, isOpen: false })
     }
     
-    const handlePageChange = (page: number) => {
-        setPage(page)
-    }
-
     const handleFilterProducts = (category: string) => {
         const categoryProducts = data.filter((product: { category: string; }) => product.category === category)
         dispatch(setApiItems(categoryProducts)); 
@@ -129,20 +119,11 @@ const Products: React.FC = () => {
                         />
 
                         <ProductCard 
-                            data={paginatedProducts} 
+                            data={productsItems} 
                             setIsOpen={setIsOpen} 
-                            allData={productsItems}
                         />
                     </StyledProductsDiv>
                     </StyledContent>
-
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '11px' }}>
-                        <Pagination 
-                            defaultCurrent={1} 
-                            total={20} 
-                            onChange={handlePageChange}
-                        />
-                    </div>
                 </>
             }
             
