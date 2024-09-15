@@ -33,6 +33,16 @@ export const StyledSpan = styled.span`
     color: brown;
 `
 
+export const StyledUserDiv = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`
+
+export const StyledUserH = styled.h3`
+    color: brown;
+`
+
 export const StyledContentDiv = styled.div`
     padding: 24px;
     min-height: 360px;

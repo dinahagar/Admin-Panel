@@ -9,9 +9,7 @@ export const StyledProductsDiv = styled.div`
     max-height: 80vh;
     height: 80vh;
     margin-top: 20px;
-    justify-content: center;
-    align-items: center;
-    display: grid;
+    display: block;
     overflow-y: auto;
 `
 

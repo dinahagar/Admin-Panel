@@ -49,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({data, setIsOpen, allData}) => 
     
     const handleSearch = (input: string) => {
         if(input.trim() !== '') {
-            const searchTitleResult = allData?.filter((product: { title: string; }) => product.title.toLowerCase().startsWith(input.toLowerCase()))
+            const searchTitleResult = allData?.filter((product: { title: string; }) => product.title.toLowerCase().includes(input.toLowerCase()))
             setProducts(searchTitleResult)
         }else {
             setProducts(data)

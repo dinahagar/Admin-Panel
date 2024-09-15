@@ -1,6 +1,6 @@
 import { Button, Dropdown, MenuProps } from "antd"
 import { UserOutlined } from "@ant-design/icons";
-import { StyledHeader } from "../Home.styles";
+import { StyledHeader, StyledUserDiv, StyledUserH } from "../Home.styles";
 import { Link, useLocation } from "react-router-dom";
 
 const Header: React.FC = () => {  
@@ -18,13 +18,18 @@ const Header: React.FC = () => {
         }
       ];
 
+      const userName = localStorage.getItem('username')
+
     return (
       <>
         {location.pathname !== "/" && (
           <StyledHeader>
+            <StyledUserDiv>
+              <StyledUserH>{userName}</StyledUserH>
               <Dropdown menu={{ items }} placement="bottom">
                   <Button><UserOutlined /></Button>
               </Dropdown>
+            </StyledUserDiv>
           </StyledHeader>
         )}
       </>
